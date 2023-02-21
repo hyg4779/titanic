@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.CartMapper">
+	<!-- 회원 장바구니 조회 -->
+	<!-- parameter 회원id,  -->
+	<select id="cartList" parameterType="int" resultMap="cartListMap">
+		select c.cnt, p.name, pi.img_url
+		from cart c
+		inner join product p
+		on c.product_id = p.id
+		inner join productImg pi
+		on p.id = pi.product_id
+		where c.user_id = #{userId}
+	</select>
+ 
+	<resultMap type = "CartListDTO" id="cartListMap">
+		<collection property = "CartDTO" resultMap = "CartMap"/>
+	</resultMap>
+
+
+	<resultMap type="CartDTO" id="CartMap">
+		<id property = "cnt" column = "cnt"></id>
+		<id property = "name" column = "name"></id>
+		<id property = "imgUrl" column = "img_url"></id>
+	</resultMap>
+
+
+	<!-- 장바구니 상품 변경
+	<update id="updateCart" parameterType="int">
+	</update>-->
+	
+	
+	 <!--장바구니 상품 삭제 
+	<delete id="deleteProductOfCart" parameterType="int">
+	</delete>-->
+	
+</mapper>
